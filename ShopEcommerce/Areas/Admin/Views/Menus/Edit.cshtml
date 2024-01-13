@@ -1,0 +1,52 @@
+﻿@model ShopEcommerce.Models.Menu
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Menu</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdMenu" />
+            <div class="form-group">
+                <label asp-for="NameMenu" class="control-label"></label>
+                <input asp-for="NameMenu" class="form-control" />
+                <span asp-validation-for="NameMenu" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="LinkMenu" class="control-label"></label>
+                <input asp-for="LinkMenu" class="form-control" />
+                <span asp-validation-for="LinkMenu" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsParent" /> @Html.DisplayNameFor(model => model.IsParent)
+                </label>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="IsChildren" class="control-label"></label>
+                <input asp-for="IsChildren" class="form-control" />
+                <span asp-validation-for="IsChildren" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
