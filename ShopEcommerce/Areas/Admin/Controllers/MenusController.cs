@@ -56,18 +56,20 @@ namespace ShopEcommerce.Areas.Admin.Controllers
             {
                 menu = new Menu();
             }
+            ViewBag.Menu = new SelectList(repository.GetAll().OrderBy(x=> x.NameMenu), "IdMenu", "NameMenu");
             return View(menu);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateOrUpdate([Bind("IdMenu,NameMenu,LinkMenu,IsParent,IsActive,IsChildren")] Menu menu)
+        public async Task<IActionResult> CreateOrUpdate( Menu menu)
         {
             if (ModelState.IsValid)
             {
                 repository.CreateOrUpdate(menu);
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.Menu = new SelectList(repository.GetAll().OrderBy(x => x.NameMenu), "IdMenu", "NameMenu");
             return View(menu);
         }
 
@@ -81,12 +83,12 @@ namespace ShopEcommerce.Areas.Admin.Controllers
             }
 
             var menu = repository.GetById(id);
-            if (menu == null)
+            if (menu != null)
             {
-                return NotFound();
+                repository.Delete(menu);    
             }
 
-            return View(menu);
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: Admin/Menus/Delete/5

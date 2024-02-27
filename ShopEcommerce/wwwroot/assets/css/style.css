@@ -537,31 +537,37 @@
 /*banner slider css end*/
 
 /* 2.5 categorie menu css here*/
-.sidebar_widget.catrgorie  {
+.catrgoriers {
+	padding: 10px;
+	background: #00bba6;
+	border: 5px solid #89e8dd;
+	color: white;
+}
+.catrgoriers {
 	padding: 10px;
 	background: #00bba6;
 	border: 5px solid #89e8dd;
 }
-.sidebar_widget.catrgorie  h3 {
-	padding-right: 10px;
-	text-transform: uppercase;
-	font-weight: 500;
-	color: #fff;
-	border-bottom: 1px solid #009483;
-	font-size: 18px;
-	padding-bottom: 10px;
-}
-.sidebar_widget.catrgorie ul li a {
-	display: block;
-	padding: 7px 11px 5px 0px;
-	color: #fff;
-	text-transform: capitalize;
-	border-bottom: 1px solid #01ab98;
-	position: relative;
-}
-.sidebar_widget.catrgorie ul li a i {
-	margin-right: 3px;
-}
+.catrgoriers h3 {
+		padding-right: 10px;
+		text-transform: uppercase;
+		font-weight: 500;
+		color: #fff;
+		border-bottom: 1px solid #009483;
+		font-size: 18px;
+		padding-bottom: 10px;
+	}
+	.catrgoriers ul li a {
+		display: block;
+		padding: 7px 11px 5px 0px;
+		color: #fff;
+		text-transform: capitalize;
+		border-bottom: 1px solid #01ab98;
+		position: relative;
+	}
+		.catrgoriers ul li a i {
+			margin-right: 3px;
+		}
 .sidebar_widget.catrgorie > ul > li.has-sub.open > a i {
 	-webkit-transform: rotate(90deg);
 	transform: rotate(90deg);

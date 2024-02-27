@@ -1,0 +1,49 @@
+﻿@model ShopEcommerce.Models.Category
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Menu</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a>Home</a></li>
+                <li class="breadcrumb-item"><a>Menu</a></li>
+                <li class="breadcrumb-item active">Add </li>
+            </ol>
+        </nav>
+
+        <hr />
+    </div>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+    <section class="section dashboard">
+        <hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateOrUpdate">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="IdCategory"  type="hidden"/>
+            <div class="form-group">
+                <label asp-for="NameCategoty" class="control-label"></label>
+                <input asp-for="NameCategoty" class="form-control" />
+                <span asp-validation-for="NameCategoty" class="text-danger"></span>
+            </div>
+            <hr />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+</section>
+</main>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

@@ -1,0 +1,38 @@
+﻿@model ShopEcommerce.Models.Page
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Pages";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="pos_page">
+    <div class="container">
+        <!--pos page inner-->
+        <div class="pos_page_inner">
+            @await Component.InvokeAsync("Header");
+            <div class="breadcrumbs_area">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="breadcrumb_content">
+                            <ul>
+                                <li><a href="/">Home</a></li>
+                                <li><i class="fa fa-angle-right"></i></li>
+                                <li>contact</li>
+                            </ul>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--breadcrumbs area end-->
+            <!--contact area start-->
+            <div class="contact_area">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>@Model.TitlePage</h3>
+                       @Html.Raw(@Model.ContentPage)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

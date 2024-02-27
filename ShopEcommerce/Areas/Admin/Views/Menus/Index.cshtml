@@ -18,7 +18,7 @@
         </nav>
     </div><!-- End Page Title -->
     <p>
-        <a asp-action="CreateOrUpdate" asp-controller="Menus">Thêm menu</a>
+        <a asp-action="CreateOrUpdate" asp-controller="Menus">Add menu</a>
     </p>
     <section class="section dashboard">
         <div class="row">
@@ -32,15 +32,11 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.LinkMenu)
                             </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.IsParent)
-                            </th>
+                          
                             <th>
                                 @Html.DisplayNameFor(model => model.IsActive)
                             </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.IsChildren)
-                            </th>
+                           
                             <th></th>
                         </tr>
                     </thead>
@@ -54,15 +50,11 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.LinkMenu)
                                 </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.IsParent)
-                                </td>
+                             
                                 <td>
                                     @Html.DisplayFor(modelItem => item.IsActive)
                                 </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.IsChildren)
-                                </td>
+                               
                                 <td>
                                     <a asp-action="CreateOrUpdate" asp-route-id="@item.IdMenu">Edit</a> |
                                     <a asp-action="Details" asp-route-id="@item.IdMenu">Details</a> |

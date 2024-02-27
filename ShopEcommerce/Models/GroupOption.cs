@@ -12,5 +12,9 @@ namespace ShopEcommerce.Models
         [ForeignKey(nameof(OptionProduct))]
         public int IdOption { get; set; }
         public virtual List<OptionProduct> OptionProducts { get; set; }
+
+        [ForeignKey(nameof(Product))]
+        public int IdProduct{ get; set; }
+        public virtual List<Product> Products { get; set; }
     }
 }

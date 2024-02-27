@@ -75,17 +75,15 @@ namespace ShopEcommerce.Data.migrations
                     b.Property<int>("IdOption")
                         .HasColumnType("int");
 
+                    b.Property<int>("IdProduct")
+                        .HasColumnType("int");
+
                     b.Property<string>("NameGroup")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int?>("ProductIdProduct")
-                        .HasColumnType("int");
-
                     b.HasKey("IdGroup");
-
-                    b.HasIndex("ProductIdProduct");
 
                     b.ToTable("GroupOptions");
                 });
@@ -101,21 +99,24 @@ namespace ShopEcommerce.Data.migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<int>("IsChildren")
+                    b.Property<int>("Level")
                         .HasColumnType("int");
-
-                    b.Property<bool>("IsParent")
-                        .HasColumnType("bit");
 
                     b.Property<string>("LinkMenu")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<int>("MenuOrder")
+                        .HasColumnType("int");
+
                     b.Property<string>("NameMenu")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("ParentId")
+                        .HasColumnType("int");
 
                     b.HasKey("IdMenu");
 
@@ -152,6 +153,35 @@ namespace ShopEcommerce.Data.migrations
                     b.HasIndex("IdGroup");
 
                     b.ToTable("OptionProducts");
+                });
+
+            modelBuilder.Entity("ShopEcommerce.Models.Page", b =>
+                {
+                    b.Property<int>("IdPage")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPage"));
+
+                    b.Property<string>("ContentPage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("IdMenu")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TitlePage")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("nvarchar(2000)");
+
+                    b.HasKey("IdPage");
+
+                    b.HasIndex("IdMenu")
+                        .IsUnique()
+                        .HasFilter("[IdMenu] IS NOT NULL");
+
+                    b.ToTable("Pages");
                 });
 
             modelBuilder.Entity("ShopEcommerce.Models.Post", b =>
@@ -197,10 +227,10 @@ namespace ShopEcommerce.Data.migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("IdCategory")
+                    b.Property<int?>("GroupOptionIdGroup")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdGroup")
+                    b.Property<int>("IdCategory")
                         .HasColumnType("int");
 
                     b.Property<string>("ImageProduct")
@@ -226,27 +256,11 @@ namespace ShopEcommerce.Data.migrations
 
                     b.HasKey("IdProduct");
 
+                    b.HasIndex("GroupOptionIdGroup");
+
                     b.HasIndex("IdCategory");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("ShopEcommerce.Models.ProductModel", b =>
-                {
-                    b.Property<int>("IdProductModel")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdProductModel"));
-
-                    b.Property<int>("IdGroupOtion")
-                        .HasColumnType("int");
-
-                    b.HasKey("IdProductModel");
-
-                    b.HasIndex("IdGroupOtion");
-
-                    b.ToTable("ProductModels");
                 });
 
             modelBuilder.Entity("ShopEcommerce.Models.Role", b =>
@@ -265,6 +279,34 @@ namespace ShopEcommerce.Data.migrations
                     b.HasKey("IdRole");
 
                     b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("ShopEcommerce.Models.Slide", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("NameImg")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("SloganTitle")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Slides");
                 });
 
             modelBuilder.Entity("ShopEcommerce.Models.User", b =>
@@ -337,13 +379,6 @@ namespace ShopEcommerce.Data.migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ShopEcommerce.Models.GroupOption", b =>
-                {
-                    b.HasOne("ShopEcommerce.Models.Product", null)
-                        .WithMany("GroupOptions")
-                        .HasForeignKey("ProductIdProduct");
-                });
-
             modelBuilder.Entity("ShopEcommerce.Models.OptionProduct", b =>
                 {
                     b.HasOne("ShopEcommerce.Models.GroupOption", "GroupOption")
@@ -355,8 +390,21 @@ namespace ShopEcommerce.Data.migrations
                     b.Navigation("GroupOption");
                 });
 
+            modelBuilder.Entity("ShopEcommerce.Models.Page", b =>
+                {
+                    b.HasOne("ShopEcommerce.Models.Menu", "Menu")
+                        .WithOne("Page")
+                        .HasForeignKey("ShopEcommerce.Models.Page", "IdMenu");
+
+                    b.Navigation("Menu");
+                });
+
             modelBuilder.Entity("ShopEcommerce.Models.Product", b =>
                 {
+                    b.HasOne("ShopEcommerce.Models.GroupOption", null)
+                        .WithMany("Products")
+                        .HasForeignKey("GroupOptionIdGroup");
+
                     b.HasOne("ShopEcommerce.Models.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("IdCategory")
@@ -364,17 +412,6 @@ namespace ShopEcommerce.Data.migrations
                         .IsRequired();
 
                     b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("ShopEcommerce.Models.ProductModel", b =>
-                {
-                    b.HasOne("ShopEcommerce.Models.GroupOption", "GroupOption")
-                        .WithMany()
-                        .HasForeignKey("IdGroupOtion")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("GroupOption");
                 });
 
             modelBuilder.Entity("ShopEcommerce.Models.User", b =>
@@ -396,11 +433,13 @@ namespace ShopEcommerce.Data.migrations
             modelBuilder.Entity("ShopEcommerce.Models.GroupOption", b =>
                 {
                     b.Navigation("OptionProducts");
+
+                    b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("ShopEcommerce.Models.Product", b =>
+            modelBuilder.Entity("ShopEcommerce.Models.Menu", b =>
                 {
-                    b.Navigation("GroupOptions");
+                    b.Navigation("Page");
                 });
 
             modelBuilder.Entity("ShopEcommerce.Models.Role", b =>

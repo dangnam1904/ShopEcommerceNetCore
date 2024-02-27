@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 
 namespace ShopEcommerce.Models
 {
@@ -10,6 +11,7 @@ namespace ShopEcommerce.Models
         [StringLength(50)]
         public string NameCategoty { get; set; }
 
+        [ValidateNever]
         public virtual List<Product> Products { get; set; }
 
     }

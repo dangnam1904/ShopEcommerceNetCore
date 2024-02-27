@@ -8,14 +8,14 @@ namespace ShopEcommerce.Models
         public int IdMenu { get; set; }
         [Required]
         [StringLength(50)]
-
         public string NameMenu { get; set; }
         [Required]
         [StringLength(50)]
         public string LinkMenu{ get; set; }
-        public bool IsParent { get; set; }
+        public int ParentId { get; set; }
         public bool IsActive { get; set; }
-        public int IsChildren { get; set; }
-
+        public int MenuOrder { get; set; }
+        public int Level { get; set; }
+        public Page? Page { get; set; }
     }
 }

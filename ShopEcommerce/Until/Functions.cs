@@ -18,19 +18,19 @@
         public static string RemoveUnicode(string text)
         {
             string[] arr1 = new string[] { "á", "à", "ả", "ã", "ạ", "â", "ấ", "ầ", "ẩ", "ẫ", "ậ", "ă", "ắ", "ằ", "ẳ", "ẵ", "ặ",
-    "đ",
-    "é","è","ẻ","ẽ","ẹ","ê","ế","ề","ể","ễ","ệ",
-    "í","ì","ỉ","ĩ","ị",
-    "ó","ò","ỏ","õ","ọ","ô","ố","ồ","ổ","ỗ","ộ","ơ","ớ","ờ","ở","ỡ","ợ",
-    "ú","ù","ủ","ũ","ụ","ư","ứ","ừ","ử","ữ","ự",
-    "ý","ỳ","ỷ","ỹ","ỵ",};
-            string[] arr2 = new string[] { "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a",
-    "d",
-    "e","e","e","e","e","e","e","e","e","e","e",
-    "i","i","i","i","i",
-    "o","o","o","o","o","o","o","o","o","o","o","o","o","o","o","o","o",
-    "u","u","u","u","u","u","u","u","u","u","u",
-    "y","y","y","y","y",};
+                "đ",
+                "é","è","ẻ","ẽ","ẹ","ê","ế","ề","ể","ễ","ệ",
+                "í","ì","ỉ","ĩ","ị",
+                "ó","ò","ỏ","õ","ọ","ô","ố","ồ","ổ","ỗ","ộ","ơ","ớ","ờ","ở","ỡ","ợ",
+                "ú","ù","ủ","ũ","ụ","ư","ứ","ừ","ử","ữ","ự",
+                "ý","ỳ","ỷ","ỹ","ỵ",};
+                        string[] arr2 = new string[] { "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a", "a",
+                "d",
+                "e","e","e","e","e","e","e","e","e","e","e",
+                "i","i","i","i","i",
+                "o","o","o","o","o","o","o","o","o","o","o","o","o","o","o","o","o",
+                "u","u","u","u","u","u","u","u","u","u","u",
+                "y","y","y","y","y",};
             for (int i = 0; i < arr1.Length; i++)
             {
                 text = text.Replace(arr1[i], arr2[i]);
@@ -67,6 +67,32 @@
         }
 
 
+        public static string saveMutiImage(List<IFormFile> listImg, string pathImg)
+        {
+            string image = "";
+            foreach (var file in listImg)
+            {
+                //   image += file.FileName + ";";
+
+                string img_replace = file.FileName.Split(".")[0] + DateTime.Now.ToString("yyyyMMddHHmmss") + radomGenatorText() + "." + file.FileName.Split(".")[1];
+                image += img_replace + ";";
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets/img/"+pathImg);
+
+                //create folder if not exist
+                if (!Directory.Exists(path))
+                    Directory.CreateDirectory(path);
+
+                string fileNameWithPath = Path.Combine(path, img_replace);
+
+                using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
+            }
+            image = image.TrimEnd(';');
+
+            return image;
+        }
         public static void deleteMutiImage(string listImg)
         {
 
@@ -80,6 +106,20 @@
             }
         }
 
+      
+
+        public static void deleteMutiImage(string listImg, string pathImg)
+        {
+
+            foreach (var file in listImg)
+            {
+                foreach (var item in listImg.Split(";"))
+                {
+                    System.IO.File.Delete(Path.Combine
+                        (Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets/img/" + pathImg), item));
+                }
+            }
+        }
         public static string radomGenatorText()
         {
             var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -97,9 +137,30 @@
 
         public static string saveSingleImage(IFormFile Img)
         {
-            string img_replace = Img.FileName.Split(".")[0] + DateTime.Now.ToString("yyyyMMddHHmmss") + radomGenatorText() + "." + Img.FileName.Split(".")[1];
+            string img_replace = Img.FileName.Split(".")[0] + DateTime.Now.ToString("yyyyMMddHHmmss")
+                + radomGenatorText() + "." + Img.FileName.Split(".")[1];
 
             string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img");
+
+            //create folder if not exist
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+
+            string fileNameWithPath = Path.Combine(path, img_replace);
+
+            using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+            {
+                Img.CopyTo(stream);
+            }
+            return img_replace;
+        }
+
+        public static string saveSingleImage(IFormFile Img,string pathImg)
+        {
+            string img_replace = Img.FileName.Split(".")[0] + DateTime.Now.ToString("yyyyMMddHHmmss")
+                + radomGenatorText() + "." + Img.FileName.Split(".")[1];
+
+            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets/img/" + pathImg);
 
             //create folder if not exist
             if (!Directory.Exists(path))
@@ -118,6 +179,11 @@
         {
             System.IO.File.Delete(Path.Combine
                 (Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img"), Img));
+        }
+        public static void deleteSingleImage(string Img,string pathImg)
+        {
+            System.IO.File.Delete(Path.Combine
+                (Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/assets/img/" + pathImg), Img));
         }
     }
 }

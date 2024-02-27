@@ -27,7 +27,7 @@ namespace ShopEcommerce.Repositorys
                 {
                     dataContext.Menu.Add(menu);
                 }
-                dataContext.SaveChangesAsync();
+                dataContext.SaveChanges();
             }
             catch (Exception ex)
             {
@@ -39,7 +39,7 @@ namespace ShopEcommerce.Repositorys
         {
             try
             {
-                dataContext.Remove((_object.IdMenu));
+                dataContext.Remove(_object);
                 dataContext.SaveChanges();
             }
             catch (Exception ex)

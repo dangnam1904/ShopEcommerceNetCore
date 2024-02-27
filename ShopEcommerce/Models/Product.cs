@@ -33,12 +33,5 @@ namespace ShopEcommerce.Models
         public Category Category { get; set; }
         public bool IsNew { get; set; }
         public bool IsHot { get; set; }
-  
-
-        [ForeignKey (nameof(GroupOption))]
-        public int IdGroup { get; set; }
-        public virtual List<GroupOption> GroupOptions { get; set; }
-
-
     }
 }

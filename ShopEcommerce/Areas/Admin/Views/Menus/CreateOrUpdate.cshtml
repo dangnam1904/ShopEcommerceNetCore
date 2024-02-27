@@ -2,7 +2,7 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{
-    ViewData["Title"] = "Create";
+   
     Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 <main id="main" class="main">
@@ -38,23 +38,34 @@
                         <input asp-for="LinkMenu" class="form-control" />
                         <span asp-validation-for="LinkMenu" class="text-danger"></span>
                     </div>
-                    <div class="form-group form-check">
-                        <label class="form-check-label">
-                            <input class="form-check-input" asp-for="IsParent" /> @Html.DisplayNameFor(model => model.IsParent)
-                        </label>
-                    </div>
+         
                     <div class="form-group form-check">
                         <label class="form-check-label">
                             <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
                         </label>
                     </div>
                     <div class="form-group">
-                        <label asp-for="IsChildren" class="control-label"></label>
-                        <input asp-for="IsChildren" class="form-control" />
-                        <span asp-validation-for="IsChildren" class="text-danger"></span>
+                        <label asp-for="Level" class="control-label"></label>
+                        <input asp-for="Level" type="number" min="0" max="5" step="1" class="form-control" />
+                        <span asp-validation-for="Level" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="MenuOrder" class="control-label"></label>
+                        <input asp-for="MenuOrder" type="number" min="0" step="1" class="form-control" />
+                        <span asp-validation-for="MenuOrder" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <input type="submit" value="Create" class="btn btn-primary" />
+                        <label class="control-label">Menu cha</label>
+                        <select asp-for="ParentId" asp-items="ViewBag.Menu" class="form-select form-control">
+                            <option onselect="" disabled> Chọn menu</option>
+                            <option name="ParentId" value="0" selected="selected"> NO MENU</option>
+
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
                     </div>
                 </form>
             </div>

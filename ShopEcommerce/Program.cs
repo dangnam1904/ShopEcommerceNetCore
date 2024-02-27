@@ -17,6 +17,14 @@ builder.Services.AddDbContext<DataContext>(option =>
 });
 
 builder.Services.AddScoped<IRepository<Menu>, MenuRepository>();
+builder.Services.AddScoped<IRepository<Slide>, SlideRepository>();
+builder.Services.AddScoped<IRepository<Category>, CategoryRepository>();
+builder.Services.AddScoped<IRepository<Page>, PageRepository>();
+builder.Services.AddScoped<IPage, PageRepository>();
+builder.Services.AddScoped<IProduct, ProductRepository>();
+builder.Services.AddScoped<IGroupOption, GroupOptionReopsitory>();
+builder.Services.AddScoped<IOptionProduct, OptionProductRepository>();
+
 
 
 // Add services to the container.

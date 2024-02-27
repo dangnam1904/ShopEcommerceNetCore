@@ -1,0 +1,450 @@
+﻿@model ShopEcommerce.Models.ModelViews.ProductView
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<<script src="~/ckeditor/ckeditor.js"></script>
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Product</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a>Home</a></li>
+                <li class="breadcrumb-item"><a>Product</a></li>
+                <li class="breadcrumb-item active"></li>
+            </ol>
+        </nav>
+
+        <hr />
+    </div>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+    <section class="section dashboard">
+        <hr />
+        <div class="row">
+            <div class="col-md-12">
+                <form asp-action="CreateOrUpdate" method="post" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Product.NameProduct" class="control-label"></label>
+                        <input asp-for="Product.NameProduct" class="form-control" />
+                        <span asp-validation-for="Product.NameProduct" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Product.TitleProduct" class="control-label"></label>
+                        <input asp-for="Product.TitleProduct" class="form-control" />
+                        <span asp-validation-for="Product.TitleProduct" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Product.DescriptionProduct" class="control-label"></label>
+                        <textarea asp-for="Product.DescriptionProduct" class="form-control"> </textarea>
+                        <script>
+                            CKEDITOR.replace("Product.DescriptionProduct");
+                        </script>
+                        <span asp-validation-for="Product.DescriptionProduct" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Product.AvatarImg" class="control-label"></label>
+                        <input asp-for="Product.fileAvatar" class="form-control" type="file" />
+                        <span asp-validation-for="Product.fileAvatar" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Product.ImageProduct" class="control-label"></label>
+                        <input asp-for="Product.fileImageProduct" class="form-control" type="file" accept="image/*" multiple />
+                        <span asp-validation-for="Product.ImageProduct" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Categories</label>
+                        <select asp-for="Product.IdCategory" class="form-control" asp-items="ViewBag.IdCategory"></select>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Product.IsNew" /> @Html.DisplayNameFor(model => model.Product.IsNew)
+                        </label>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Product.IsHot" /> @Html.DisplayNameFor(model => model.Product.IsHot)
+                        </label>
+                    </div>
+                    <hr />
+                    <label> Phân loại</label>
+                    <input type="button" value="Add new Group" id="btnAddGroup" />
+                    @{
+                                                <div class="group-item">
+                                                    <div class="col-sm-1">
+                                                    </div>
+                                                    <div class="col-sm-11">
+                                                        <div class="form-group group-item-info">
+                                                            <div class="col-sm-12" id="group-option">
+                                                                @{
+                                            if (Model.GroupOptions == null || Model.GroupOptions.Count <= 0)
+                                            {
+                                               
+                                            }
+                                            else
+                                            {
+                                                                                                @for (int i = 0; i < Model.GroupOptions.Count; i++)
+                                                {
+                                                                                                    <label class="control-label">Group @i</label>
+                                                                                                    <input type="hidden" name="@Model.GroupOptions[i].IdGroup">
+                                                                                                    <input class="form-control" style="width:40%; margin-bottom: 7px" name="@Model.GroupOptions[i].NameGroup" placeholder="type name group: ex: red, blue" />
+
+                                                }
+
+                                                                                                <div class="option-product">
+                                                                                                    @for (int i = 0; i < Model.OptionProducts.Count; i++)
+                                                    {
+                                                                                                        <div class="col-sm-4">
+                                                                                                            <label class="control-label">Group @i</label>
+                                                                                                            <input type="hidden" name="@Model.OptionProducts[i].IdOption">
+                                                                                                            <input class="form-control" style=" margin-bottom: 7px" name="@Model.OptionProducts[i].NameOption" placeholder="type name group: ex: red, blue" />
+                                                                                                        </div>
+                                                    }
+
+                                                                                                </div>
+                                            }
+                                            // <div class="option-product">
+                                            //     <div class="col-sm-3 div-option">
+                                            //         <div>
+                                            //             <label class="control-label">Group 1</label>
+                                            //             <input type="hidden" name="IdOption">
+                                            //             <input class="form-control input-option" style=" margin-bottom: 7px" name="NameOption" placeholder="blue" />
+                                            //         </div>
+                                            //         <div class="action-option">
+
+                                            //             <i class="bi-plus"></i>
+                                            //             <i class="bi-trash"></i>
+                                            //         </div>
+                                            //     </div>
+
+                                            // </div>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                    }
+                    <hr />
+                    <div class="form-group">
+                        <table id="table-product">
+                            <tr>
+                                <th id="name-group-1">Group 1</th>
+
+                                <th id="name-group-2">Group 2</th>
+                                <th>Price</th>
+                                <th>Price</th>
+                                <th> Qty</th>
+                            </tr>
+                        </table>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <input type="button" value="Save" class="btn btn-primary" />
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+        <div>
+            <a asp-action="Index">Back to List</a>
+        </div>
+
+    </section>
+    <style>
+        .table {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+        }
+
+        .row {
+            display: flex;
+            width: 100%;
+        }
+
+        .header, .cell {
+            flex: 1;
+            border: 1px solid #dddddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .header {
+            background-color: #f2f2f2;
+        }
+
+        .rowspan {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+
+    <div class="table">
+        <div class="row">
+            <div class="header">Group 1</div>
+            <div class="header">Group 2</div>
+            <div class="header">Price</div>
+            <div class="header">Price Promotion</div>
+            <div class="header">Qty</div>
+        </div>
+        <div class="row">
+            <div class="cell">Row 1, Cell 1</div>
+            <div class="cell">Row 1, Cell 2</div>
+            <div class="cell">Row 1, Cell 3</div>
+            <div class="cell">Row 1, Cell 2</div>
+            <div class="cell">Row 1, Cell 3</div>
+        </div>
+         <div class="row">
+            <div class="cell">Row 1, Cell 1</div>
+            <div class="cell">Row 1, Cell 2</div>
+            <div class="cell">Row 1, Cell 3</div>
+            <div class="cell">Row 1, Cell 2</div>
+            <div class="cell">Row 1, Cell 3</div>
+        </div>
+        <div class="row">
+            <div class="cell">Row 1, Cell 1</div>
+            <div class="cell">Row 1, Cell 2</div>
+            <div class="cell">Row 1, Cell 3</div>
+            <div class="cell">Row 1, Cell 2</div>
+            <div class="cell">Row 1, Cell 3</div>
+        </div>
+        <div class="row">
+            <div class="cell">Row 2, Cell 1</div>
+            <div class="cell">Row 2, Cell 2</div>
+            <div class="cell">Row 2, Cell 3</div>
+            <div class="cell">Row 1, Cell 2</div>
+            <div class="cell">Row 1, Cell 3</div>
+        </div>
+      
+    </div>
+        
+
+</main>
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    .div-option {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+    }
+
+    .action-option {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        margin-top: 27px;
+    }
+
+    i {
+        font-size: 20px;
+        font-weight: 600;
+        margin: 0px 3px;
+    }
+
+        i:hover {
+            cursor: pointer;
+            color: red;
+            font-weight: 900;
+        }
+
+    .group-item-product {
+        margin: 7px 0px;
+    }
+
+    .option-product {
+        float: left;
+        margin-left: 30px;
+        width: 100%;
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .group-item {
+        display: flex;
+        width: 100%;
+        flex-wrap: wrap;
+        margin-top: 7px;
+    }
+
+    .group-item-info {
+        background: #f6f6f6;
+        border: 1px solid #f6f6f6;
+        border-radius: 7px;
+        display: flex;
+        flex-wrap: wrap;
+    }
+</style>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(function () {
+            $("#btnAddGroup").click(function () {
+
+                var count = document.querySelectorAll(".group-item-product").length;
+                var limitRow = Number(count + 1);
+                var htmlString =
+                    '<div class="context-option" style="display:flex"> ' +
+                    '<div class="gr-option-product">' +
+                    '<label class="control-label" > Option 1 </label>' +
+                    '  <input type = "hidden" name = "OptionProducts[0].IdOption" >' +
+                    '<input class="form-control input-option" style = " margin-bottom: 7px" name = "OptionProducts[0].NameOption" placeholder = "blue" /> ' +
+                    '</div>' +
+                    '<div class="action-option">' +
+                    '<i class="bi-plus" > </i>' +
+                    '<i class="bi-trash" > </i>' +
+                    '</div></div>';
+
+                $("#group-option").append(
+                    "<div class='group-item-product' id='group-item-product-" + count + "'> <input name='GroupOptions[" + count + "].IdGroup' type = 'hidden'/> <label>Group " + Number(count + 1) + " </label><input  style='margin-left: 7px' id='group-option-" + count + "' name= 'GroupOptions[" + count + "].NameGroup' /> <div class='option-product' id='option-product-" + Number(count + 1) + "'> " + htmlString + "</div></div>");
+                if (limitRow == 2) {
+                    document.getElementById("btnAddGroup").parentNode.removeChild(document.getElementById("btnAddGroup"));
+                }
+
+            });
+        });
+
+        $("body").on("click", ".bi-trash", (function () {
+            this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode)
+        }));
+
+
+        $("body").on("click", ".bi-plus", (function () {
+            var count = document.querySelectorAll(".gr-option-product").length + 1;
+            var tr = (this.parentNode);
+            var tt = tr.parentnode;
+            console.log(tr);
+            var t = document.querySelectorAll(".gr-option-product");
+
+
+            var countparent = document.querySelectorAll(".group-item-product").length;
+
+            var htmlstring =
+                '<div class="context-option" style="display:flex"> ' +
+                '<div class="gr-option-product">' +
+                '<label class="control-label" > option ' + count + ' </label>' +
+                '  <input type = "hidden" name = "optionproducts[' + count + '].idoption" >' +
+                '<input class="form-control input-option" style = " margin-bottom: 7px" name = "optionproducts[' + count + '].nameoption" placeholder = "blue" /> ' +
+                '</div>' +
+                '<div class="action-option">' +
+                '<i class="bi-plus" > </i>' +
+                '<i class="bi-trash" > </i>' +
+                '</div></div>';
+
+            var itemcuros = '#option-product-' + Number(countparent);
+            $(itemcuros).append(htmlstring);
+        }));
+
+
+        $(".action-option > .bi-plus").on("click", (function () {
+            alert("Cộng")
+        }));
+
+        $(document).ready(function () {
+
+            $("body").on("change", "#group-option-0", (function () {
+                document.getElementById("name-group-1").innerText = this.value
+            }));
+
+            $("body").on("change", "#group-option-1", (function () {
+                document.getElementById("name-group-2").innerText = this.value
+            }));
+        });
+
+        $("body").on("change", "#option-product-1 > .context-option > .gr-option-product > input", (function () {
+            var listOption = document.querySelectorAll("#option-product-1 > .context-option > .gr-option-product");
+            $("#table-product").ready(function () {
+                removeTbody("data-product");
+                listOption.forEach(e => {
+                    var htmlDom = '<td class="data-group2"></td><td> <input  name="price" type="number" min="0" /> </td>' +
+                        '<td> <input name="price" type="number" min="0" /> </td>' +
+                        '<td> <input name="price" type="number" min="0" /> </td>';
+                    $("#table-product").append("<tr class='data-product'> <td class='data-group1'>" + e.childNodes[3].value + " </td> " + htmlDom + " </tr>")
+                })
+            })
+        }));
+
+        $("body").on("change", "#option-product-2 > .context-option > .gr-option-product > input", (function () {
+            var listOption = document.querySelectorAll("#option-product-2 > .context-option > .gr-option-product");
+            var listRowOnTable = document.querySelectorAll("tr");
+            var listDataProduct = document.querySelectorAll(".data-product");
+            $("#table-product").ready(function () {
+
+                var htmlDom = '<tr> <td class="data-group2"> 1 </td><td>2 </td>' +
+                    '<td> 3</td>' +
+                    '<td> 4 </tr>';
+
+                for (var i = 0; i < listDataProduct.length; i++) {
+
+                    listDataProduct[i].childNodes[1].rowSpan = listOption.length;
+                    if (i == 0) {
+                        if (listOption.length > 1) {
+                            var listOption1 = document.querySelectorAll("#option-product-1 > .context-option > .gr-option-product");
+                            removeTrLaster("data-product");
+                            var htmlDom1 = '<td class="data-group2"></td><td> <input  name="price" type="number" min="0" /> </td>' +
+                                '<td> <input name="price" type="number" min="0" /> </td>' +
+                                '<td> <input name="price" type="number" min="0" /> </td>';
+                            $("#table-product").append(htmlDom)
+                              
+
+                         
+
+                            var htmlDom1 = '<td class="data-group2"></td><td> <input  name="price" type="number" min="0" /> </td>' +
+                                '<td> <input name="price" type="number" min="0" /> </td>' +
+                                '<td> <input name="price" type="number" min="0" /> </td>';
+                            $("#table-product").append("<tr class='data-product'> <td rowspan='2' class='data-group1'>" + listOption1[1].childNodes[3].value + " </td> " + htmlDom1 + " </tr>")
+
+
+                        }
+                        // $("#table-product").append(htmlDom);
+                    }
+                    if (  i==1 && listOption.length > 1) {
+                        $("#table-product").append(htmlDom)
+                    }
+                   
+                  
+                }
+                // if (listOption.length > 1) {
+                //     removeTrLaster("data-product");
+                // }
+               
+            })
+        }));
+
+        function removeTbody(className) {
+            var element = document.querySelectorAll("." + className + "");
+            if (element != null) {
+                element.forEach(e => e.remove())
+            }
+        }
+
+        function removeTrLaster(className) {
+            var element = document.querySelectorAll("." + className + "");
+            if (element != null) {
+                for (var i = 0; i < element.length; i++) {
+                    if (element.length - i == 1) {
+                        element[i].remove();
+                    }
+                }
+            }
+        }
+    </script>
+}
+
+   

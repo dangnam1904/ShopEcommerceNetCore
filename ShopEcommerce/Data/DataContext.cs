@@ -24,7 +24,7 @@ namespace ShopEcommerce.Data
         public DbSet<OptionProduct> OptionProducts { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<ProductModel> ProductModels { get; set; }
-
+        public DbSet<Slide> Slides { get; set; }
+        public DbSet<Page> Pages { get; set; }
     }
 }
